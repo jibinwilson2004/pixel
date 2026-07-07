@@ -784,9 +784,11 @@
       .nav-toggle.active .bar:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
       }
+
       .nav-toggle.active .bar:nth-child(2) {
         opacity: 0;
       }
+
       .nav-toggle.active .bar:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
       }
@@ -979,7 +981,6 @@
             IEEE SPS Kerala Chapter
           </a>
         </div>
-        <a class="nav-register" href="error.html">Register</a>
       </div>
     </nav>
 
@@ -1296,38 +1297,38 @@
       gsap.to('#glow-layer', { x: xNorm * 50, y: yNorm * 50, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
 
       // Foreground Hero elements depth reaction
-      gsap.to('.hero-title', { 
-        x: xNorm * 20, 
-        y: yNorm * 20, 
-        rotateY: xNorm * 8, 
-        rotateX: yNorm * -8, 
-        duration: 0.8, 
-        ease: 'power2.out', 
-        overwrite: 'auto' 
+      gsap.to('.hero-title', {
+        x: xNorm * 20,
+        y: yNorm * 20,
+        rotateY: xNorm * 8,
+        rotateX: yNorm * -8,
+        duration: 0.8,
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
-      gsap.to('.hero-sub', { 
-        x: xNorm * 12, 
-        y: yNorm * 12, 
-        duration: 0.9, 
-        ease: 'power2.out', 
-        overwrite: 'auto' 
+      gsap.to('.hero-sub', {
+        x: xNorm * 12,
+        y: yNorm * 12,
+        duration: 0.9,
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
-      gsap.to('.hero-meta', { 
-        x: xNorm * 15, 
-        y: yNorm * 15, 
-        duration: 1.0, 
-        ease: 'power2.out', 
-        overwrite: 'auto' 
+      gsap.to('.hero-meta', {
+        x: xNorm * 15,
+        y: yNorm * 15,
+        duration: 1.0,
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
-      gsap.to('.coming-tag', { 
-        x: xNorm * 18, 
-        y: yNorm * 18, 
-        rotate: xNorm * 1.5, 
-        duration: 1.1, 
-        ease: 'power2.out', 
-        overwrite: 'auto' 
+      gsap.to('.coming-tag', {
+        x: xNorm * 18,
+        y: yNorm * 18,
+        rotate: xNorm * 1.5,
+        duration: 1.1,
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
-      
+
       // Floating cards subtle tilt/translate reaction
       gsap.utils.toArray('.pixel-card').forEach((card, i) => {
         const factor = (i + 1) * 5;
