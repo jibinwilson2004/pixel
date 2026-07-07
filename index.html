@@ -220,6 +220,7 @@
 
     /* ----- NAV ----- */
     .pixel-nav {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -274,6 +275,37 @@
       color: #ffd700;
       border-color: #ffd700;
       background: #ffd70011;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-between;
+      margin-left: 3rem;
+    }
+
+    /* ----- HAMBURGER TOGGLE ----- */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 10;
+    }
+
+    .nav-toggle .bar {
+      height: 4px;
+      width: 100%;
+      background-color: #ffd700;
+      box-shadow: 2px 2px 0 #886600;
+      transition: all 0.3s ease;
+      image-rendering: pixelated;
     }
 
     .nav-register {
@@ -427,7 +459,7 @@
       align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
-      width: 150%;
+      width: 100%;
     }
 
     .coming-tag {
@@ -727,22 +759,76 @@
       }
 
       .pixel-nav {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-logo {
+        margin-left: 0.5rem;
+      }
+
+      .nav-logo img {
+        height: 64px;
+        width: 64px;
+      }
+
+      .nav-toggle {
+        display: flex;
+        margin-right: 0.5rem;
+      }
+
+      /* Animated states for hamburger bars */
+      .nav-toggle.active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+      .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
         flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
+        width: 100%;
+        gap: 1.5rem;
+        background: rgba(10, 12, 20, 0.95);
+        border: 3px solid #ffd700;
+        box-sizing: border-box;
+        box-shadow: 4px 4px 0 #886600, inset -2px -2px 0 #886600, inset 2px 2px 0 #ffdd77;
+        padding: 1.5rem;
+        margin-left: 0;
+        margin-top: 4px;
+        transform-style: preserve-3d;
+        z-index: 99;
+      }
+
+      .nav-menu.active {
+        display: flex;
       }
 
       .nav-links {
-        justify-content: center;
-        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 1.2rem;
       }
 
       .nav-register {
-        align-self: center;
+        width: 100%;
+        text-align: center;
+        align-self: stretch;
       }
 
       .footer-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1.5rem;
       }
 
@@ -757,6 +843,16 @@
 
       .hero {
         min-height: 50vh;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .hero-meta .meta-item img {
+        height: 28px;
+        width: 28px;
       }
 
       .explore-row {
@@ -796,8 +892,13 @@
         font-size: 0.6rem;
       }
 
-      .hero-meta span {
+      .hero-meta .meta-item {
         padding: 0.2rem 0.6rem;
+      }
+
+      .hero-meta .meta-item img {
+        height: 24px;
+        width: 24px;
       }
 
       .nav-links {
@@ -860,18 +961,25 @@
       <a href="/" class="nav-logo" aria-label="IEEE SB MBITS Home">
         <img id="navLogoImage" src="MBITS.png" alt="IEEE SB MBITS logo" />
       </a>
-      <div class="nav-links">
-        <a href="/error.html">About</a>
-        <a href="/error.html">Roadmap</a>
-        <a href="/error.html">Gallery</a>
-        <a href="https://www.ieeesbmbits.in/" target="_blank" rel="noopener" title="IEEE SB MBITS">
-          IEEE SB MBITS
-        </a>
-        <a href="https://www.ieeespskc.in/" target="_blank" rel="noopener" title="IEEE SPS Kerala Chapter">
-          IEEE SPS Kerala Chapter
-        </a>
+      <button class="nav-toggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="/error.html">About</a>
+          <a href="/error.html">Roadmap</a>
+          <a href="/error.html">Gallery</a>
+          <a href="https://www.ieeesbmbits.in/" target="_blank" rel="noopener" title="IEEE SB MBITS">
+            IEEE SB MBITS
+          </a>
+          <a href="https://www.ieeespskc.in/" target="_blank" rel="noopener" title="IEEE SPS Kerala Chapter">
+            IEEE SPS Kerala Chapter
+          </a>
+        </div>
+        <a class="nav-register" href="error.html">Register</a>
       </div>
-      <a class="nav-register" href="error.html">Register</a>
     </nav>
 
     <!-- HERO -->
@@ -1250,6 +1358,22 @@
     }
 
     setInterval(rotateNavLogo, 3500);
+
+    // ---------- NAV TOGGLE ----------
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
   </script>
   <script>
     // Ensure any anchor without a target points to the error page
