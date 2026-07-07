@@ -1,0 +1,14 @@
+*** Begin Patch
+*** Update File: c:\Users\LEVONO\Downloads\Pixel\error.html
+@@
+-		justify-content:center;
+-		overflow:hidden;
+-	}
+-	.stage{width:980px;height:1400px;position:relative;box-sizing:border-box;padding:60px 40px}
++		justify-content:center;
++		min-height:100vh;
++		padding:24px;
++		overflow-x:hidden;
++	}
++	.stage{width:min(100%,980px);position:relative;box-sizing:border-box;padding:40px 24px;margin:0 auto;}
+*** End Patch
