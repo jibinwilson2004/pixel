@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="MBITS.png" />
   <title>PIXEL · IEEE SB MBITS</title>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -209,6 +210,8 @@
       padding: 0 2.5rem;
       flex: 1 0 auto;
       width: 100%;
+      perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .scroll-target {
@@ -302,6 +305,7 @@
       align-items: center;
       text-align: center;
       padding: 2rem 0 3rem 0;
+      transform-style: preserve-3d;
     }
 
     .hero-badge {
@@ -1160,6 +1164,74 @@
       scale: 1.05,
       opacity: 0.9,
       scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1.6 }
+    });
+
+    // ---------- MOUSE MOVEMENT PARALLAX ----------
+    let isMobile = window.matchMedia('(max-width: 768px)').matches;
+    window.addEventListener('resize', () => {
+      isMobile = window.matchMedia('(max-width: 768px)').matches;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isMobile || prefersReducedMotion) return;
+
+      const { clientX, clientY } = e;
+      const xNorm = (clientX / window.innerWidth) - 0.5; // -0.5 to 0.5
+      const yNorm = (clientY / window.innerHeight) - 0.5; // -0.5 to 0.5
+
+      // Background layers offset (opposite to cursor)
+      gsap.to('#grid-layer', { x: xNorm * -25, y: yNorm * -25, duration: 1.0, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to('.wave-band', { x: xNorm * -45, y: yNorm * -45, duration: 1.3, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to('.wave-band.alt', { x: xNorm * 35, y: yNorm * 35, duration: 1.6, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to('.pixel-stars', { x: xNorm * -15, y: yNorm * -15, duration: 0.9, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to('#glow-layer', { x: xNorm * 50, y: yNorm * 50, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
+
+      // Foreground Hero elements depth reaction
+      gsap.to('.hero-title', { 
+        x: xNorm * 20, 
+        y: yNorm * 20, 
+        rotateY: xNorm * 8, 
+        rotateX: yNorm * -8, 
+        duration: 0.8, 
+        ease: 'power2.out', 
+        overwrite: 'auto' 
+      });
+      gsap.to('.hero-sub', { 
+        x: xNorm * 12, 
+        y: yNorm * 12, 
+        duration: 0.9, 
+        ease: 'power2.out', 
+        overwrite: 'auto' 
+      });
+      gsap.to('.hero-meta', { 
+        x: xNorm * 15, 
+        y: yNorm * 15, 
+        duration: 1.0, 
+        ease: 'power2.out', 
+        overwrite: 'auto' 
+      });
+      gsap.to('.coming-tag', { 
+        x: xNorm * 18, 
+        y: yNorm * 18, 
+        rotate: xNorm * 1.5, 
+        duration: 1.1, 
+        ease: 'power2.out', 
+        overwrite: 'auto' 
+      });
+      
+      // Floating cards subtle tilt/translate reaction
+      gsap.utils.toArray('.pixel-card').forEach((card, i) => {
+        const factor = (i + 1) * 5;
+        gsap.to(card, {
+          x: xNorm * factor,
+          y: yNorm * factor,
+          rotateX: yNorm * -4,
+          rotateY: xNorm * 4,
+          duration: 1.0,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
     });
 
     console.log('✦ PIXEL · reflecting excellence & innovation');
